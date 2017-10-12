@@ -19,7 +19,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $current = (new \DateTime())->format('Y-m-d H:i:s');
+        $current = (new \DateTime());
 
         $repository = $this->getDoctrine()->getRepository('AppBundle:Weather');
         $query = $repository->createQueryBuilder('l')->setMaxResults(1)
@@ -27,26 +27,30 @@ class DefaultController extends Controller
 
         $last = $query->getResult();
 
+        $city = $last[0]->getCity();
+        $wind = $last[0]->getWind();
+        $temp = $last[0]->getTemp();
+        $time = $last[0]->getDate();
+        $lastTime = $time->format('Y-m-d H:i:s');
+        $diff = $time->diff($current)->format('%h');
 
-       $id = $last[0]->getId();
-       $time = $last[0]->getDate()->format('Y-m-d H:i:s');
-        echo $time;
+        if ($diff > 3) {
+           return $this->forward('AppBundle:Default:downloadWeather');
+        }
 
+        return $this->render('default/index.html.twig', array(
+            'city' => $city,
+            'temp' => $temp,
+            'date' => $lastTime,
+            'wind' => $wind
+        ));
 
-
-//
-//        return $this->render('default/index.html.twig', array(
-//            'city' => $city,
-//            'temp' => $temp,
-//            'date' => $date,
-//            'wind' => $wind
-//        ));
     }
 
     /**
-     * @Route("/download")
+     * @Route("/download", name="download")
      */
-    public function downloadWeather()
+    public function downloadWeatherAction()
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'api.openweathermap.org/data/2.5/weather?q=Warsaw,pl&lang=pl&units=metric&APPID=cec0709ff900c6d42355ce30cfb061b2');
