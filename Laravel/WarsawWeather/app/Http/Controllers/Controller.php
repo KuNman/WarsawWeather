@@ -14,9 +14,28 @@ class Controller extends BaseController
 
     public function index()
     {
-        $current = (new \DateTime());
+        $current = (new \DateTime())->format('Y-m-d H:i:s');
+        $hour = substr($current, -8,2);
 
-        echo $current;
+        $row = DB::select('select * from weather ORDER BY id DESC LIMIT 1');
+
+        $city = $row[0]->city;
+        $temp = $row[0]->temp;
+        $time = $row[0]->date;
+        $wind = $row[0]->wind;
+
+        $lastHour = substr($time, -8,2);
+        if ($hour - $lastHour > 3) {
+            return redirect()->action('Controller@downloadWeather');
+        }
+
+        return view('index', [
+            'city' => $city,
+            'temp' => $temp,
+            'wind' => $wind,
+            'date' => $time
+        ]);
+
     }
 
     public function downloadWeather()
@@ -34,11 +53,14 @@ class Controller extends BaseController
 
         $time = date('Y-m-d H:i:s');
 
-        $last = DB::insert("INSERT INTO weather (city, temp, date, wind) VALUES ('$city', $temp, '$time', $wind )");
+        DB::insert("INSERT INTO weather (city, temp, date, wind) VALUES ('$city', $temp, '$time', $wind )");
 
-
-
-
+        return view('index', [
+            'city' => $city,
+            'temp' => $temp,
+            'wind' => $wind,
+            'date' => $time
+        ]);
 
     }
 }

@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/index', 'Controller@index');
+Route::get('/', 'Controller@index');
 Route::get('/download', 'Controller@downloadWeather');
 
