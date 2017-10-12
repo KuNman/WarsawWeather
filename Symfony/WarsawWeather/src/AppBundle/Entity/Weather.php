@@ -24,16 +24,30 @@ class Weather
     /**
      * @var string
      *
-     * @ORM\Column(name="City", type="string", length=255)
+     * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="temp", type="integer")
+     */
+    private $temp;
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date", type="datetime")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="wind", type="string", length=255)
+     */
+    private $wind;
 
 
     /**
@@ -70,6 +84,29 @@ class Weather
     }
 
     /**
+     * Set temp
+     *
+     * @param integer $temp
+     * @return Weather
+     */
+    public function setTemp($temp)
+    {
+        $this->temp = $temp;
+
+        return $this;
+    }
+
+    /**
+     * Get temp
+     *
+     * @return integer 
+     */
+    public function getTemp()
+    {
+        return $this->temp;
+    }
+
+    /**
      * Set date
      *
      * @param \DateTime $date
@@ -90,5 +127,28 @@ class Weather
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set wind
+     *
+     * @param string $wind
+     * @return Weather
+     */
+    public function setWind($wind)
+    {
+        $this->wind = $wind;
+
+        return $this;
+    }
+
+    /**
+     * Get wind
+     *
+     * @return string 
+     */
+    public function getWind()
+    {
+        return $this->wind;
     }
 }
