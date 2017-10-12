@@ -5,8 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Weather;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class DefaultController extends Controller
 {
@@ -48,7 +47,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/download", name="download")
+     * @Route(name="download")
      */
     public function downloadWeatherAction()
     {
@@ -63,13 +62,13 @@ class DefaultController extends Controller
         $temp = $array['main']['temp'];
         $wind = $array['wind']['speed'];
 
-        $time = date('Y-m-d');
+        $time = date('Y-m-d H:i:s');
 
         $weather = new Weather();
         $weather->setCity($city);
         $weather->setTemp($temp);
         $weather->setWind($wind);
-        $weather->setDate(\DateTime::createFromFormat('Y-m-d', $time));
+        $weather->setDate(\DateTime::createFromFormat('Y-m-d H:i:s', $time));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($weather);
