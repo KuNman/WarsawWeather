@@ -13,4 +13,5 @@
 
 Route::get('/', 'Controller@index');
 Route::get('/download', 'Controller@downloadWeather');
+Route::get('/cache', 'Controller@cache');
 

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
@@ -62,5 +64,13 @@ class Controller extends BaseController
             'date' => $time
         ]);
 
+    }
+
+    public function cache()
+    {
+        $time = Carbon::now()->addMinutes(1);
+        Cache::put('city','Warsaw', $time);
+        $city = Cache::get('city');
+        echo $city;
     }
 }
