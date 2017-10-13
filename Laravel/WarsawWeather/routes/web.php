@@ -13,8 +13,6 @@
 
 Route::get('/', 'Controller@index');
 Route::get('/download', 'Controller@downloadWeather');
-<<<<<<< HEAD
 Route::get('/cache', 'Controller@cache');
+Route::get('/create', 'Controller@createCache');
 
-=======
->>>>>>> 80d1dfa85c7150b001596930515bb38fca815807

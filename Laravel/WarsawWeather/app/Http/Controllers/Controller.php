@@ -7,11 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\Cache;
-=======
 
->>>>>>> 80d1dfa85c7150b001596930515bb38fca815807
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
@@ -73,9 +70,22 @@ class Controller extends BaseController
 
     public function cache()
     {
-        $time = Carbon::now()->addMinutes(1);
+        if (Cache::has('city')) {
+            echo $city = Cache::get('city');
+        }
+    }
+
+    public function createCache()
+    {
+        $time = Carbon::now()->addSecond(1);
         Cache::put('city','Warsaw', $time);
+
+    }
+
+    public function getCache()
+
+    {
         $city = Cache::get('city');
-        echo $city;
+        return $city;
     }
 }
