@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
@@ -14,6 +15,7 @@ class Controller extends BaseController
 
     public function index()
     {
+
         $current = (new \DateTime())->format('Y-m-d H:i:s');
         $hour = substr($current, -8,2);
 

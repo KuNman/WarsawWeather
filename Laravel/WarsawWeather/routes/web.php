@@ -13,4 +13,3 @@
 
 Route::get('/', 'Controller@index');
 Route::get('/download', 'Controller@downloadWeather');
-
